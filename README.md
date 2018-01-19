@@ -33,7 +33,7 @@ You can get additional [sample python runbooks](https://github.com/azureautomati
 
 ## Enabling use of Azure Automation RunAs account locally for authenticating to Azure
 
-In order to authenticate with Azure resources, Azure Automation creates a [RunAs service principal](https://docs.microsoft.com/en-us/azure/automation/automation-create-runas-account). This service principal uses certificate-based authentication. Follow the following steps to add another certificate to the service principal that is used for authentication from the development machine.
+In order to authenticate with Azure resources, Azure Automation creates a [RunAs service principal](https://docs.microsoft.com/en-us/azure/automation/automation-create-runas-account). This service principal uses certificate-based authentication. Use the following steps to add another certificate to the service principal that is used for authentication from the development machine.
 
 ### Install Azure CLI
 
@@ -69,7 +69,7 @@ openssl x509 -noout -in /home/user/tmpbtxnq3vs.pem -fingerprint
 openssl pkcs12 -export -in /home/user/runas.pem -out hybrid_runas.pfx
 ```
 
-### You can now copy the thumbprint, location of the pfx file, and the password used into the certificate object in localassets.json
+* You can now copy the thumbprint, location of the pfx file, and the password used into the certificate object in localassets.json
 
 ### Update the AzureRunAsConnection object to the correct values in localassets.json
 
