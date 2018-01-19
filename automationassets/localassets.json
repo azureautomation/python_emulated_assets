@@ -1,0 +1,45 @@
+{
+  "Variable": [
+      {
+        "Name": "myvariable",
+        "Value": "myvariablevalue"
+      },
+      {
+        "Name": "myvariable1",
+        "Value": "myvariablevalue1"
+      }
+    ],
+  "Credential": [
+    {
+      "Username": "user",
+      "Password": "password",
+      "Name": "mycredential"
+    },
+    {
+      "Username": "user1",
+      "Password": "password1",
+      "Name": "mycredential1"
+    }
+  ], 
+    "Connection": [
+      {
+        "ValueFields": {
+          "SubscriptionId": "XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX",
+          "ApplicationId": "XXXX-XXXX-XXXX-XXXX-XXXXXXXX",
+          "CertificateThumbprint": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+          "TenantId": "XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        },
+        "Name": "AzureRunAsConnection",
+        "ConnectionType": "AzureServicePrincipal"
+      }
+    ], 
+    "Certificate": [
+      {
+        "Thumbprint": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "CertPath": "/home/user/automation/myrunas.pfx",
+        "Password": "StrongPassword",
+        "Exportable": true,
+        "Name": "AzureRunAsCertificate"
+      }
+  ]
+}
