@@ -69,7 +69,7 @@ openssl x509 -noout -in /home/user/tmpbtxnq3vs.pem -fingerprint
 openssl pkcs12 -export -in /home/user/runas.pem -out hybrid_runas.pfx
 ```
 
-* You can now copy the thumbprint, location of the pfx file, and the password used into the certificate object in localassets.json
+* You can now copy the thumbprint, location of the pfx file, and the password used into the certificate object in [localassets.json](automationassets/localassets.json)
 
 ### Update the AzureRunAsConnection object to the correct values in localassets.json
 
@@ -77,7 +77,7 @@ openssl pkcs12 -export -in /home/user/runas.pem -out hybrid_runas.pfx
 
 ![RunAs connection properties](images/runasconnection.png)
 
-* Modify the AzureRunAsConnection object in the localassets.json file with these values. Update the thumbprint with the value of your local thumbprint and not the one from the portal.
+* Modify the AzureRunAsConnection object in the [localassets.json](automationassets/localassets.json) file with these values. Update the thumbprint with the value of your local thumbprint and not the one from the portal.
 
 ### Testing the local RunAs service principal
 
