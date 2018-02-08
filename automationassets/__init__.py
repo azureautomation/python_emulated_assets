@@ -1,0 +1,5 @@
+from .automationassets import get_automation_variable
+from .automationassets import set_automation_variable
+from .automationassets import get_automation_credential
+from .automationassets import get_automation_connection
+from .automationassets import get_automation_certificate

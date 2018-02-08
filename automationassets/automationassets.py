@@ -22,6 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ----------------------------------------------------------------------------------
+import os
+import json
+from OpenSSL import crypto
+
 
 # Constant keys for extracing items from automation assets.
 _KEY_NAME = "Name"
@@ -39,14 +43,12 @@ _KEY_CONNECTION = "Connection"
 
 # Get Azure Automation asset json file
 def _get_automation_asset_file():
-    import os
     if os.environ.get('AUTOMATION_ASSET_FILE') is not None:
         return os.environ.get('AUTOMATION_ASSET_FILE')
     return os.path.join(os.path.dirname(__file__), "localassets.json")
 
 # Helper function to find an asset of a specific type and name in the asset file
 def _get_asset_value(asset_file, asset_type, asset_name):
-    import json
     json_data = open(asset_file)
     json_string = json_data.read()
     local_assets = json.loads(json_string)
@@ -65,8 +67,8 @@ def _get_asset_value(asset_file, asset_type, asset_name):
     return return_value
 
 # Returns an asset from the asses file
-def _get_asset(asset_type, asset_name):
-    local_assets_file = _get_automation_asset_file()
+def _get_asset(asset_type, asset_name, alt_infile=None):
+    local_assets_file = _get_automation_asset_file() if bool(alt_infile) == False else alt_infile
 
     # Look in assets file for value
     return_value = _get_asset_value(local_assets_file, asset_type, asset_name)
@@ -77,7 +79,6 @@ def _get_asset(asset_type, asset_name):
 
 # Helper function to set an asset of a specific type and name in the assetFile
 def _set_asset_value(asset_file, asset_type, asset_name, asset_value):
-    import json
     json_data = open(asset_file)
     json_string = json_data.read()
     local_assets = json.loads(json_string)
@@ -99,8 +100,8 @@ def _set_asset_value(asset_file, asset_type, asset_name, asset_value):
     return item_found
 
 # Updates an asset in the assets file
-def _set_asset(asset_type, asset_name, asset_value):
-    local_assets_file = _get_automation_asset_file()
+def _set_asset(asset_type, asset_name, asset_value, alt_outfile=None):
+    local_assets_file = _get_automation_asset_file() if bool(alt_outfile) == False else alt_outfile
     # Check assets file for value.
     item_found = _set_asset_value(local_assets_file,
                                   asset_type, asset_name, asset_value)
@@ -110,20 +111,20 @@ def _set_asset(asset_type, asset_name, asset_value):
 
 # Below are the 5 supported calls that can be made to automation assets from within
 # a python script
-def get_automation_variable(name):
+def get_automation_variable(name, alt_infile=None):
     """ Returns an automation variable """
-    variable = _get_asset(_KEY_VARIABLE, name)
+    variable = _get_asset(_KEY_VARIABLE, name, alt_infile)
     return variable[_KEY_VALUE]
 
 
-def set_automation_variable(name, value):
+def set_automation_variable(name, value, alt_outfile=None):
     """ Sets an automation variable """
-    _set_asset(_KEY_VARIABLE, name, value)
+    _set_asset(_KEY_VARIABLE, name, value, alt_outfile)
 
 
-def get_automation_credential(name):
+def get_automation_credential(name, alt_infile=None):
     """ Returns an automation credential as a dictionay with username and password as keys """
-    credential = _get_asset(_KEY_CREDENTIAL, name)
+    credential = _get_asset(_KEY_CREDENTIAL, name, alt_infile)
 
     # Return a dictionary of the credential asset
     credential_dictionary = {}
@@ -132,16 +133,16 @@ def get_automation_credential(name):
     return credential_dictionary
 
 
-def get_automation_connection(name):
+def get_automation_connection(name, alt_infile=None):
     """ Returns an automation connection dictionary """
-    connection = _get_asset(_KEY_CONNECTION, name)
+    connection = _get_asset(_KEY_CONNECTION, name, alt_infile)
     return connection[_KEY_CONNECTION_FIELDS]
 
 
-def get_automation_certificate(name):
+def get_automation_certificate(name, alt_infile=None):
     """ Returns an automation certificate in PKCS12 bytes """
-    from OpenSSL import crypto
-    certificate = _get_asset(_KEY_CERTIFICATE, name)
+
+    certificate = _get_asset(_KEY_CERTIFICATE, name, alt_infile)
     pks12_cert = crypto.load_pkcs12(open(certificate[_KEY_CERTPATH], 'rb').read(),
                                     certificate[_KEY_PASSWORD])
     return crypto.PKCS12.export(pks12_cert)
