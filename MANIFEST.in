@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+include automationassets/localassets.json
+include images/*.png
