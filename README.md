@@ -10,11 +10,11 @@ This emulated module supports the following functions:
 * get_automation_connection
 * get_automation_certificate
 
-The local values should be entered into the localassets.json file as these values are read by the emulated python automationassets module for the functions. You should keep this file secure if it contains sensitive information.
+The local values should be entered into the [localassets.json](automationassets/localassets.json) file as these values are read by the emulated python automationassets module functions. You should keep this file secure if it contains sensitive information. The functions will look in the localassets.json for values in the same directory as the automationassets.py by default. You can set an environment variable called AUTOMATION_ASSET_FILE with a different location for this file if you prefer.
 
 ### Using the emulated automationassets module
 
-* Copy the [automationassets](automationassets/automationassets.py) and [localasets](automationassets/localassets.json) files into the directory where you are authoring python runbooks.
+* Copy the [automationassets](automationassets/automationassets.py) and [localassets](automationassets/localassets.json) files into the directory where you are authoring python runbooks.
 * Author python runbooks and call the previous functions like you would when running within the Automation service.
 
 * For example, you should be able to create a new python file with the following code and run it locally.
