@@ -54,7 +54,7 @@ az login
 * Create and add a new certificate to this service principal using the name copied from the portal. You need to be the owner of this service principal or be an administrator in the Azure active directory. If you created the RunAs during Automation account creation, then you are an owner.
 
 ```bash
-az ad sp reset-credentials --name ignite2017_jVI6s7/RI0PAAXv4A33BCDDYY12= --append --create-cert
+az ad sp credential reset --name ignite2017_jVI6s7/RI0PAAXv4A33BCDDYY12= --append --create-cert
 ```
 
 ### Get the thumbprint of certificate created. The location of the certificate file is returned by the previous call if successful
