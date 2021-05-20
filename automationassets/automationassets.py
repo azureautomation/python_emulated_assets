@@ -1,5 +1,4 @@
 """ Azure Automation assets module to be used with Azure Automation during offline development """
-#!/usr/bin/env python2
 # ----------------------------------------------------------------------------------
 #
 # MIT License
@@ -22,6 +21,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # ----------------------------------------------------------------------------------
+
+# Support for python3
+try:
+    dict.iteritems
+except AttributeError:
+    # Python 3
+    def iteritems(d):
+        return iter(d.items())
+else:
+    # Python 2
+    def iteritems(d):
+        return d.iteritems()
 
 # Constant keys for extracing items from automation assets.
 _KEY_NAME = "Name"
@@ -52,7 +63,7 @@ def _get_asset_value(asset_file, asset_type, asset_name):
     local_assets = json.loads(json_string)
 
     return_value = None
-    for asset, asset_values in local_assets.iteritems():
+    for asset, asset_values in iteritems(local_assets):
         if asset == asset_type:
             for value in asset_values:
                 if value[_KEY_NAME] == asset_name:
@@ -83,7 +94,7 @@ def _set_asset_value(asset_file, asset_type, asset_name, asset_value):
     local_assets = json.loads(json_string)
     item_found = False
 
-    for asset, asset_values in local_assets.iteritems():
+    for asset, asset_values in iteritems(local_assets):
         if asset == asset_type:
             for value in asset_values:
                 if value[_KEY_NAME] == asset_name:
